@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:notes/Local_DB/database.dart';
 import 'package:notes/Models/models.dart';
+import 'package:notes/Provider/noteProvider.dart';
+import 'package:provider/provider.dart';
 
 class AddNote extends StatefulWidget {
 
@@ -13,8 +15,6 @@ class AddNote extends StatefulWidget {
 class _AddNoteState extends State<AddNote> {
   final TextEditingController _title = TextEditingController();
   final TextEditingController _body = TextEditingController();
-
-  dbHelper db = dbHelper();
 
   final time = DateTime.now();
 
@@ -100,9 +100,11 @@ class _AddNoteState extends State<AddNote> {
           if(title == null || title.isEmpty || body == null || body.isEmpty){
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("please enter your note")));
           }else{
+
             NotesModel note = NotesModel(Title: title , Body: body);
-            await db.insertData(note);
+            await Provider.of<noteProvider>(context,listen: false).insertNote(note);
             Navigator.pop(context);
+
           }
 
         },

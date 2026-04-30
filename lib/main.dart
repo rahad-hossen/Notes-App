@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:notes/Provider/noteProvider.dart';
 import 'package:notes/Screens/Home.dart';
+import 'package:provider/provider.dart';
 
 void main(){
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,9 +19,13 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Home(),
+    return ChangeNotifierProvider(
+      create: (context) => noteProvider(),
+      lazy: false,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: Home(),
+      ),
     );
   }
 }

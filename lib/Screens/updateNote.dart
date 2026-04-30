@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:notes/Local_DB/database.dart';
 import 'package:notes/Models/models.dart';
+import 'package:provider/provider.dart';
+
+import '../Provider/noteProvider.dart';
 
 class UpdateNote extends StatefulWidget {
 
@@ -118,7 +121,7 @@ class _UpdateNoteState extends State<UpdateNote> {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("please enter your note")));
           }else{
             NotesModel note = NotesModel(id: widget.id,Title: title , Body: body);
-            await db.UpdateData(note);
+            Provider.of<noteProvider>(context,listen: false).updateNote(note);
             Navigator.pop(context);
           }
 
